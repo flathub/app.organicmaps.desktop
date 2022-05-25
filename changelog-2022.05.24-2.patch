@@ -1,0 +1,35 @@
+From a44116af648c6ad94e20ceb6b13e8a5b09f33b79 Mon Sep 17 00:00:00 2001
+From: Francesco Gazzetta <fgaz@fgaz.me>
+Date: Tue, 24 May 2022 15:24:32 +0000
+Subject: [PATCH] [desktop] Release notes for 2022.05.24-2
+
+Signed-off-by: Francesco Gazzetta <fgaz@fgaz.me>
+---
+ qt/res/app.organicmaps.desktop.metainfo.xml | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
+
+diff --git a/qt/res/app.organicmaps.desktop.metainfo.xml b/qt/res/app.organicmaps.desktop.metainfo.xml
+index 922ea51d1ae..41d3aaaee98 100644
+--- a/qt/res/app.organicmaps.desktop.metainfo.xml
++++ b/qt/res/app.organicmaps.desktop.metainfo.xml
+@@ -107,6 +107,20 @@
+   </screenshots>
+ 
+   <releases>
++   <release version="2022.05.24-2" date="2022-05-24">
++     <description>
++       <ul>
++         <li>Fixed road shields rendering in some places</li>
++         <li>Improved car and pedestrian directions</li>
++         <li>Improved cross-region routing</li>
++         <li>Fixed some pedestrian/bike/car routing issues</li>
++         <li>Some performance optimizations</li>
++         <li>Fixed some translations</li>
++         <li>Added Marathi language</li>
++         <li>Added Devanagari font</li>
++       </ul>
++     </description>
++   </release>
+    <release version="2022.04.27-2" date="2022-04-27">
+      <description>
+        <ul>
