@@ -40,6 +40,9 @@ modules:
         commit: ac4dea5bad8af9231c1b2ea0c41b34c147962030
       - type: patch
         path: ./changelog-2022.05.24-2.patch
+      # Fix routing crash, remove on next release
+      - type: patch
+        path: ./pr-2625.patch
       - type: shell
         commands:
           - 'bash configure.sh'

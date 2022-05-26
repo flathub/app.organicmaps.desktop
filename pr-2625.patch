@@ -1,0 +1,485 @@
+From d3041bf022eec19f92ddbf9c57e98cfeac5821c9 Mon Sep 17 00:00:00 2001
+From: Viktor Govako <viktor.govako@gmail.com>
+Date: Thu, 26 May 2022 12:04:44 +0300
+Subject: [PATCH 1/3] [routing] Free MwmHandle set in routing::MwmDataSource.
+
+Signed-off-by: Viktor Govako <viktor.govako@gmail.com>
+---
+ routing/data_source.hpp  | 7 +++++++
+ routing/index_router.cpp | 6 ++++--
+ 2 files changed, 11 insertions(+), 2 deletions(-)
+
+diff --git a/routing/data_source.hpp b/routing/data_source.hpp
+index 8304138fa13..28fa89046f0 100644
+--- a/routing/data_source.hpp
++++ b/routing/data_source.hpp
+@@ -46,6 +46,13 @@ class MwmDataSource
+     : m_dataSource(dataSource), m_numMwmIDs(std::move(numMwmIDs))
+   {}
+ 
++  void FreeHandles()
++  {
++    m_features.release();
++    m_handles.clear();
++    m_handles2.clear();
++  }
++
+   bool IsLoaded(platform::CountryFile const & file) const { return m_dataSource.IsLoaded(file); }
+ 
+   enum SectionStatus
+diff --git a/routing/index_router.cpp b/routing/index_router.cpp
+index a2a861a42af..e3e6dc91b6e 100644
+--- a/routing/index_router.cpp
++++ b/routing/index_router.cpp
+@@ -288,6 +288,7 @@ void IndexRouter::ClearState()
+ {
+   m_roadGraph.ClearState();
+   m_directionsEngine->Clear();
++  m_dataSource.FreeHandles();
+ }
+ 
+ bool IndexRouter::FindClosestProjectionToRoad(m2::PointD const & point,
+@@ -341,8 +342,9 @@ RouterResultCode IndexRouter::CalculateRoute(Checkpoints const & checkpoints,
+ 
+   try
+   {
+-    SCOPE_GUARD(featureRoadGraphClear, [this]{
+-      this->ClearState();
++    SCOPE_GUARD(featureRoadGraphClear, [this]
++    {
++      ClearState();
+     });
+ 
+     if (adjustToPrevRoute && m_lastRoute && m_lastFakeEdges &&
+
+From 298af4da4afc36d1c76021bbbb67d8ca773a76ff Mon Sep 17 00:00:00 2001
+From: Viktor Govako <viktor.govako@gmail.com>
+Date: Thu, 26 May 2022 12:33:37 +0300
+Subject: [PATCH 2/3] [routing] Fixed possible std::out_of_range for array.
+
+Signed-off-by: Viktor Govako <viktor.govako@gmail.com>
+---
+ routing/directions_engine.cpp         | 8 ++------
+ routing/directions_engine_helpers.cpp | 7 +------
+ routing/directions_engine_helpers.hpp | 2 +-
+ 3 files changed, 4 insertions(+), 13 deletions(-)
+
+diff --git a/routing/directions_engine.cpp b/routing/directions_engine.cpp
+index a164523d936..31d29a33e85 100644
+--- a/routing/directions_engine.cpp
++++ b/routing/directions_engine.cpp
+@@ -183,14 +183,10 @@ void DirectionsEngine::FillPathSegmentsAndAdjacentEdgesMap(
+     prevJunctions.push_back(prevJunction);
+     prevSegments.push_back(ConvertEdgeToSegment(*m_numMwmIds, inEdge));
+ 
+-    if (!IsJoint(ingoingEdges, outgoingEdges, inEdge, routeEdges[i], isCurrJunctionFinish,
+-                 inFeatureId.IsValid()))
+-    {
++    if (!isCurrJunctionFinish && inFeatureId.IsValid() && !IsJoint(ingoingEdges, outgoingEdges, inEdge, routeEdges[i]))
+       continue;
+-    }
+ 
+-    CHECK_EQUAL(prevJunctions.size(),
+-                static_cast<size_t>(abs(static_cast<int32_t>(inSegId - startSegId)) + 1), ());
++    CHECK_EQUAL(prevJunctions.size(), static_cast<size_t>(abs(int(inSegId) - int(startSegId)) + 1), ());
+ 
+     prevJunctions.push_back(currJunction);
+ 
+diff --git a/routing/directions_engine_helpers.cpp b/routing/directions_engine_helpers.cpp
+index 3f52cce59e1..1b6a725641e 100644
+--- a/routing/directions_engine_helpers.cpp
++++ b/routing/directions_engine_helpers.cpp
+@@ -60,7 +60,7 @@ geometry::PointWithAltitude RoutingEngineResult::GetEndPoint() const
+ 
+ bool IsJoint(IRoadGraph::EdgeListT const & ingoingEdges,
+              IRoadGraph::EdgeListT const & outgoingEdges, Edge const & ingoingRouteEdge,
+-             Edge const & outgoingRouteEdge, bool isCurrJunctionFinish, bool isInEdgeReal)
++             Edge const & outgoingRouteEdge)
+ {
+   // When feature id is changed at a junction this junction should be considered as a joint.
+   //
+@@ -76,11 +76,6 @@ bool IsJoint(IRoadGraph::EdgeListT const & ingoingEdges,
+   //            |        |
+   //   *--Seg0--*--Seg1--*
+   // The common point of segments 0, 1 and 4 should be considered as a joint.
+-  if (!isInEdgeReal)
+-    return true;
+-
+-  if (isCurrJunctionFinish)
+-    return true;
+ 
+   if (ingoingRouteEdge.GetFeatureId() != outgoingRouteEdge.GetFeatureId())
+     return true;
+diff --git a/routing/directions_engine_helpers.hpp b/routing/directions_engine_helpers.hpp
+index 52302cf8bce..f7bc39ce1e8 100644
+--- a/routing/directions_engine_helpers.hpp
++++ b/routing/directions_engine_helpers.hpp
+@@ -53,5 +53,5 @@ class RoutingEngineResult : public turns::IRoutingResult
+ /// of a new LoadedPathSegment.
+ bool IsJoint(IRoadGraph::EdgeListT const & ingoingEdges,
+              IRoadGraph::EdgeListT const & outgoingEdges, Edge const & ingoingRouteEdge,
+-             Edge const & outgoingRouteEdge, bool isCurrJunctionFinish, bool isInEdgeReal);
++             Edge const & outgoingRouteEdge);
+ }  // namespace routing
+
+From 68179d9637b3ffee2f5f70ebef0a32bd4d810f29 Mon Sep 17 00:00:00 2001
+From: Viktor Govako <viktor.govako@gmail.com>
+Date: Thu, 26 May 2022 12:58:24 +0300
+Subject: [PATCH 3/3] [routing] Removed dummy interface.
+
+Signed-off-by: Viktor Govako <viktor.govako@gmail.com>
+---
+ routing/features_road_graph.cpp               | 28 -------------------
+ routing/features_road_graph.hpp               |  4 ---
+ routing/index_road_graph.cpp                  | 10 -------
+ routing/index_road_graph.hpp                  |  1 -
+ routing/road_graph.cpp                        |  9 ------
+ routing/road_graph.hpp                        | 12 --------
+ .../routing_tests/astar_algorithm_test.cpp    |  5 ++--
+ routing/routing_tests/astar_router_test.cpp   |  7 ++---
+ routing/routing_tests/road_graph_builder.hpp  | 11 +++++---
+ routing/routing_tests/routing_algorithm.cpp   | 11 +++-----
+ routing/routing_tests/routing_algorithm.hpp   | 24 ++++++++++++----
+ 11 files changed, 36 insertions(+), 86 deletions(-)
+
+diff --git a/routing/features_road_graph.cpp b/routing/features_road_graph.cpp
+index 6af1e9298ad..4bcce82e643 100644
+--- a/routing/features_road_graph.cpp
++++ b/routing/features_road_graph.cpp
+@@ -138,26 +138,6 @@ class CrossFeaturesLoader
+   IRoadGraph::ICrossEdgesLoader & m_edgesLoader;
+ };
+ 
+-IRoadGraph::RoadInfo FeaturesRoadGraphBase::GetRoadInfo(FeatureID const & featureId,
+-                                                        SpeedParams const & speedParams) const
+-{
+-  RoadInfo const & ri = GetCachedRoadInfo(featureId, speedParams);
+-  ASSERT_GREATER(ri.m_speedKMPH, 0.0, ());
+-  return ri;
+-}
+-
+-double FeaturesRoadGraphBase::GetSpeedKMpH(FeatureID const & featureId, SpeedParams const & speedParams) const
+-{
+-  double const speedKMPH = GetCachedRoadInfo(featureId, speedParams).m_speedKMPH;
+-  ASSERT_GREATER(speedKMPH, 0.0, ());
+-  return speedKMPH;
+-}
+-
+-double FeaturesRoadGraphBase::GetMaxSpeedKMpH() const
+-{
+-  return m_vehicleModel.GetMaxWeightSpeed();
+-}
+-
+ void FeaturesRoadGraphBase::ForEachFeatureClosestToCross(
+       m2::PointD const & cross, ICrossEdgesLoader & edgesLoader) const
+ {
+@@ -255,14 +235,6 @@ bool FeaturesRoadGraphBase::IsRoad(FeatureType & ft) const
+   return m_vehicleModel.IsRoad(ft);
+ }
+ 
+-IRoadGraph::PointWithAltitudeVec FeaturesRoadGraphBase::GetRoadGeom(FeatureType & ft) const
+-{
+-  FeatureID const & featureId = ft.GetID();
+-  IRoadGraph::RoadInfo const & roadInfo = GetCachedRoadInfo(featureId, ft, kInvalidSpeedKMPH);
+-  CHECK_EQUAL(roadInfo.m_speedKMPH, kInvalidSpeedKMPH, ());
+-  return roadInfo.m_junctions;
+-}
+-
+ bool FeaturesRoadGraphBase::IsOneWay(FeatureType & ft) const
+ {
+   return m_vehicleModel.IsOneWay(ft);
+diff --git a/routing/features_road_graph.hpp b/routing/features_road_graph.hpp
+index aa3acc253cf..1fb3fda4b77 100644
+--- a/routing/features_road_graph.hpp
++++ b/routing/features_road_graph.hpp
+@@ -81,9 +81,6 @@ class FeaturesRoadGraphBase : public IRoadGraph
+ 
+   /// @name IRoadGraph overrides
+   /// @{
+-  RoadInfo GetRoadInfo(FeatureID const & featureId, SpeedParams const & speedParams) const override;
+-  double GetSpeedKMpH(FeatureID const & featureId, SpeedParams const & speedParams) const override;
+-  double GetMaxSpeedKMpH() const override;
+   void ForEachFeatureClosestToCross(m2::PointD const & cross,
+                                     ICrossEdgesLoader & edgesLoader) const override;
+   void FindClosestEdges(m2::RectD const & rect, uint32_t count,
+@@ -98,7 +95,6 @@ class FeaturesRoadGraphBase : public IRoadGraph
+   /// @}
+ 
+   bool IsRoad(FeatureType & ft) const;
+-  IRoadGraph::PointWithAltitudeVec GetRoadGeom(FeatureType & ft) const;
+ 
+ protected:
+   MwmDataSource & m_dataSource;
+diff --git a/routing/index_road_graph.cpp b/routing/index_road_graph.cpp
+index 92940adf028..d517199598d 100644
+--- a/routing/index_road_graph.cpp
++++ b/routing/index_road_graph.cpp
+@@ -45,16 +45,6 @@ void IndexRoadGraph::GetIngoingEdges(geometry::PointWithAltitude const & junctio
+   GetEdges(junction, false, edges);
+ }
+ 
+-double IndexRoadGraph::GetMaxSpeedKMpH() const
+-{
+-  // Value doesn't matter.
+-  // It is used in CalculateMaxSpeedTimes only.
+-  // Then SingleMwmRouter::RedressRoute overwrites time values.
+-  //
+-  // TODO: remove this stub after transfering Bicycle and Pedestrian to index routing.
+-  return 0.0;
+-}
+-
+ void IndexRoadGraph::GetEdgeTypes(Edge const & edge, feature::TypesHolder & types) const
+ {
+   if (edge.IsFake())
+diff --git a/routing/index_road_graph.hpp b/routing/index_road_graph.hpp
+index cd66b1d2abe..9e4497fe93f 100644
+--- a/routing/index_road_graph.hpp
++++ b/routing/index_road_graph.hpp
+@@ -28,7 +28,6 @@ class IndexRoadGraph : public RoadGraphBase
+                                 EdgeListT & edges) const override;
+   virtual void GetIngoingEdges(geometry::PointWithAltitude const & junction,
+                                EdgeListT & edges) const override;
+-  virtual double GetMaxSpeedKMpH() const override;
+   virtual void GetEdgeTypes(Edge const & edge, feature::TypesHolder & types) const override;
+   virtual void GetJunctionTypes(geometry::PointWithAltitude const & junction,
+                                 feature::TypesHolder & types) const override;
+diff --git a/routing/road_graph.cpp b/routing/road_graph.cpp
+index d1c7dc907fd..062f2443c25 100644
+--- a/routing/road_graph.cpp
++++ b/routing/road_graph.cpp
+@@ -286,15 +286,6 @@ void IRoadGraph::AddIngoingFakeEdge(Edge const & e)
+   AddEdge(e.GetEndJunction(), e, m_fakeIngoingEdges);
+ }
+ 
+-double IRoadGraph::GetSpeedKMpH(Edge const & edge, SpeedParams const & speedParams) const
+-{
+-  double const speedKMpH =
+-      (edge.IsFake() ? GetMaxSpeedKMpH()
+-                     : GetSpeedKMpH(edge.GetFeatureId(), speedParams));
+-  ASSERT_LESS_OR_EQUAL(speedKMpH, GetMaxSpeedKMpH(), ());
+-  return speedKMpH;
+-}
+-
+ void IRoadGraph::GetEdgeTypes(Edge const & edge, feature::TypesHolder & types) const
+ {
+   if (edge.IsFake())
+diff --git a/routing/road_graph.hpp b/routing/road_graph.hpp
+index aee41ae92ee..da21883f7cf 100644
+--- a/routing/road_graph.hpp
++++ b/routing/road_graph.hpp
+@@ -129,9 +129,6 @@ class RoadGraphBase
+   virtual void GetIngoingEdges(JunctionPointT const & junction,
+                                EdgeListT & edges) const = 0;
+ 
+-  /// Returns max speed in KM/H
+-  virtual double GetMaxSpeedKMpH() const = 0;
+-
+   /// @return Types for the specified edge
+   virtual void GetEdgeTypes(Edge const & edge, feature::TypesHolder & types) const = 0;
+ 
+@@ -287,15 +284,6 @@ class IRoadGraph : public RoadGraphBase
+   void AddOutgoingFakeEdge(Edge const & e);
+   void AddIngoingFakeEdge(Edge const & e);
+ 
+-  /// Returns RoadInfo for a road corresponding to featureId.
+-  virtual RoadInfo GetRoadInfo(FeatureID const & featureId, SpeedParams const & speedParams) const = 0;
+-
+-  /// Returns speed in KM/H for a road corresponding to featureId.
+-  virtual double GetSpeedKMpH(FeatureID const & featureId, SpeedParams const & speedParams) const = 0;
+-
+-  /// Returns speed in KM/H for a road corresponding to edge.
+-  double GetSpeedKMpH(Edge const & edge, SpeedParams const & speedParams) const;
+-
+   /// Calls edgesLoader on each feature which is close to cross.
+   virtual void ForEachFeatureClosestToCross(m2::PointD const & cross,
+                                             ICrossEdgesLoader & edgesLoader) const = 0;
+diff --git a/routing/routing_tests/astar_algorithm_test.cpp b/routing/routing_tests/astar_algorithm_test.cpp
+index 4a7ecc50f51..6431de446ea 100644
+--- a/routing/routing_tests/astar_algorithm_test.cpp
++++ b/routing/routing_tests/astar_algorithm_test.cpp
+@@ -11,9 +11,10 @@
+ #include <utility>
+ #include <vector>
+ 
+-namespace routing_test
++namespace astar_algorithm_test
+ {
+ using namespace routing;
++using namespace routing_test;
+ using namespace std;
+ 
+ using Algorithm = AStarAlgorithm<uint32_t, SimpleEdge, double>;
+@@ -151,4 +152,4 @@ UNIT_TEST(AdjustRouteOutOfLimit)
+   TEST_EQUAL(code, Algorithm::Result::NoPath, ());
+   TEST(result.m_path.empty(), ());
+ }
+-}  // namespace routing_test
++}  // namespace astar_algorithm_test
+diff --git a/routing/routing_tests/astar_router_test.cpp b/routing/routing_tests/astar_router_test.cpp
+index 100847fc7ae..381ae76d444 100644
+--- a/routing/routing_tests/astar_router_test.cpp
++++ b/routing/routing_tests/astar_router_test.cpp
+@@ -19,12 +19,12 @@
+ 
+ #include <vector>
+ 
++namespace astar_router_test
++{
+ using namespace routing;
+ using namespace routing_test;
+ using namespace std;
+ 
+-namespace
+-{
+ void TestAStarRouterMock(geometry::PointWithAltitude const & startPos,
+                          geometry::PointWithAltitude const & finalPos,
+                          vector<geometry::PointWithAltitude> const & expected)
+@@ -53,8 +53,6 @@ void AddRoad(RoadGraphMockSource & graph, initializer_list<m2::PointD> const & p
+   graph.AddRoad(routing::MakeRoadInfoForTesting(true /* bidir */, speedKMpH, points));
+ }
+ 
+-}  // namespace
+-
+ UNIT_TEST(AStarRouter_Graph2_Simple1)
+ {
+   geometry::PointWithAltitude const startPos =
+@@ -332,3 +330,4 @@ UNIT_TEST(AStarRouter_SimpleGraph_PickTheFasterRoad3)
+              ());
+   TEST(base::AlmostEqualAbs(result.m_distance, 814412., 1.), ("Distance error:", result.m_distance));
+ }
++} // namespace astar_router_test
+diff --git a/routing/routing_tests/road_graph_builder.hpp b/routing/routing_tests/road_graph_builder.hpp
+index 643b103ffff..99bf8cb0745 100644
+--- a/routing/routing_tests/road_graph_builder.hpp
++++ b/routing/routing_tests/road_graph_builder.hpp
+@@ -1,4 +1,5 @@
+ #pragma once
++#include "routing_algorithm.hpp"
+ 
+ #include "routing/road_graph.hpp"
+ 
+@@ -11,18 +12,20 @@
+ namespace routing_test
+ {
+ 
+-class RoadGraphMockSource : public routing::IRoadGraph
++class RoadGraphMockSource : public RoadGraphIFace
+ {
+ public:
+   void AddRoad(RoadInfo && ri);
+ 
+   inline size_t GetRoadCount() const { return m_roads.size(); }
+ 
+-  // routing::IRoadGraph overrides:
++  /// @name RoadGraphIFace overrides:
++  /// @{
+   RoadInfo GetRoadInfo(FeatureID const & f, routing::SpeedParams const & speedParams) const override;
+-  double GetSpeedKMpH(FeatureID const & featureId,
+-                      routing::SpeedParams const & speedParams) const override;
++  double GetSpeedKMpH(FeatureID const & featureId, routing::SpeedParams const & speedParams) const override;
+   double GetMaxSpeedKMpH() const override;
++  /// @}
++
+   void ForEachFeatureClosestToCross(m2::PointD const & cross,
+                                     ICrossEdgesLoader & edgeLoader) const override;
+   void GetFeatureTypes(FeatureID const & featureId, feature::TypesHolder & types) const override;
+diff --git a/routing/routing_tests/routing_algorithm.cpp b/routing/routing_tests/routing_algorithm.cpp
+index 043bd861852..df4b1e640e1 100644
+--- a/routing/routing_tests/routing_algorithm.cpp
++++ b/routing/routing_tests/routing_algorithm.cpp
+@@ -68,10 +68,7 @@ void DirectedGraph::GetEdgesList(Vertex const & v, bool isOutgoing, EdgeListT &
+ {
+   adj = isOutgoing ? m_outgoing[v] : m_ingoing[v];
+ }
+-}  // namespace routing_tests
+ 
+-namespace routing
+-{
+ using namespace std;
+ 
+ namespace
+@@ -114,7 +111,7 @@ class RoadGraph : public Algorithm::Graph
+ {
+ public:
+ 
+-  explicit RoadGraph(IRoadGraph const & roadGraph)
++  explicit RoadGraph(RoadGraphIFace const & roadGraph)
+     : m_roadGraph(roadGraph), m_maxSpeedMPS(KMPH2MPS(roadGraph.GetMaxSpeedKMpH()))
+   {}
+ 
+@@ -164,7 +161,7 @@ class RoadGraph : public Algorithm::Graph
+   }
+ 
+ private:
+-  IRoadGraph const & m_roadGraph;
++  RoadGraphIFace const & m_roadGraph;
+   double const m_maxSpeedMPS;
+ };
+ 
+@@ -200,7 +197,7 @@ string DebugPrint(TestAStarBidirectionalAlgo::Result const & value)
+ 
+ // *************************** AStar-bidirectional routing algorithm implementation ***********************
+ TestAStarBidirectionalAlgo::Result TestAStarBidirectionalAlgo::CalculateRoute(
+-    IRoadGraph const & graph, geometry::PointWithAltitude const & startPos,
++    RoadGraphIFace const & graph, geometry::PointWithAltitude const & startPos,
+     geometry::PointWithAltitude const & finalPos,
+     RoutingResult<IRoadGraph::Vertex, IRoadGraph::Weight> & path)
+ {
+@@ -211,4 +208,4 @@ TestAStarBidirectionalAlgo::Result TestAStarBidirectionalAlgo::CalculateRoute(
+   Algorithm::Result const res = Algorithm().FindPathBidirectional(params, path);
+   return Convert(res);
+ }
+-}  // namespace routing
++}  // namespace routing_tests
+diff --git a/routing/routing_tests/routing_algorithm.hpp b/routing/routing_tests/routing_algorithm.hpp
+index 9a46fc12583..37ea124a62a 100644
+--- a/routing/routing_tests/routing_algorithm.hpp
++++ b/routing/routing_tests/routing_algorithm.hpp
+@@ -28,6 +28,23 @@ struct SimpleEdge
+   double m_weight;
+ };
+ 
++class RoadGraphIFace : public IRoadGraph
++{
++public:
++  virtual RoadInfo GetRoadInfo(FeatureID const & f, routing::SpeedParams const & speedParams) const = 0;
++  virtual double GetSpeedKMpH(FeatureID const & featureId, routing::SpeedParams const & speedParams) const = 0;
++  virtual double GetMaxSpeedKMpH() const = 0;
++
++  double GetSpeedKMpH(Edge const & edge, SpeedParams const & speedParams) const
++  {
++    double const speedKMpH =
++        (edge.IsFake() ? GetMaxSpeedKMpH()
++                       : GetSpeedKMpH(edge.GetFeatureId(), speedParams));
++    ASSERT_LESS_OR_EQUAL(speedKMpH, GetMaxSpeedKMpH(), ());
++    return speedKMpH;
++  }
++};
++
+ class UndirectedGraph : public AStarGraph<uint32_t, SimpleEdge, double>
+ {
+ public:
+@@ -68,10 +85,7 @@ class DirectedGraph
+   std::map<uint32_t, EdgeListT> m_outgoing;
+   std::map<uint32_t, EdgeListT> m_ingoing;
+ };
+-}  // namespace routing_tests
+ 
+-namespace routing
+-{
+ class TestAStarBidirectionalAlgo
+ {
+ public:
+@@ -82,10 +96,10 @@ class TestAStarBidirectionalAlgo
+     Cancelled
+   };
+ 
+-  Result CalculateRoute(IRoadGraph const & graph, geometry::PointWithAltitude const & startPos,
++  Result CalculateRoute(RoadGraphIFace const & graph, geometry::PointWithAltitude const & startPos,
+                         geometry::PointWithAltitude const & finalPos,
+                         RoutingResult<IRoadGraph::Vertex, IRoadGraph::Weight> & path);
+ };
+ 
+ std::string DebugPrint(TestAStarBidirectionalAlgo::Result const & result);
+-}  // namespace routing
++}  // namespace routing_tests
