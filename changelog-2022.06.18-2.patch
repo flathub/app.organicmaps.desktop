@@ -1,0 +1,40 @@
+From 3e53722c2bda962153221d4fd8440d378119b4c4 Mon Sep 17 00:00:00 2001
+From: Francesco Gazzetta <fgaz@fgaz.me>
+Date: Sun, 19 Jun 2022 14:48:50 +0200
+Subject: [PATCH] [desktop] changelog for 2022.06.18-2
+
+Signed-off-by: Francesco Gazzetta <fgaz@fgaz.me>
+---
+ qt/res/app.organicmaps.desktop.metainfo.xml | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
+
+diff --git a/qt/res/app.organicmaps.desktop.metainfo.xml b/qt/res/app.organicmaps.desktop.metainfo.xml
+index aa356c32..a8df72cd 100644
+--- a/qt/res/app.organicmaps.desktop.metainfo.xml
++++ b/qt/res/app.organicmaps.desktop.metainfo.xml
+@@ -107,6 +107,22 @@
+   </screenshots>
+ 
+   <releases>
++   <release version="2022.06.18-2" date="2022-06-18">
++     <description>
++       <ul>
++         <li></li>
++         <li>New OSM data as of June 13, 2022</li>
++         <li>Cross-region and other routing fixes</li>
++         <li>Nicer fences, city walls, paths/tracks, waterfalls, fountains, and drinking_water</li>
++         <li>Added icons for guidepost, plaque, bicycle rental</li>
++         <li>Typing category like "food" in the search also matches features' names</li>
++         <li>Added cliffs, embankments, bicycle repair stations, graves, water tunnels, craft=*</li>
++         <li>Road shields for Cyprus</li>
++         <li>Better displaying of the next turn street</li>
++         <li>Added Marathi localization</li>
++       </ul>
++     </description>
++   </release>
+    <release version="2022.05.31-10" date="2022-05-31">
+      <description>
+        <ul>
+-- 
+2.36.0
+

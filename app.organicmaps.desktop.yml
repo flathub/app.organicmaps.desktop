@@ -31,27 +31,16 @@ modules:
     builddir: true
     config-opts:
       - -DCMAKE_BUILD_TYPE=Release
-    post-install:
-      - 'mv ${FLATPAK_DEST}/bin/OMaps ${FLATPAK_DEST}/bin/.OMaps-wrapped'
-      - 'install -Dm755 ../wrapper.sh ${FLATPAK_DEST}/bin/OMaps'
     cleanup:
       - '/lib' # static libraries and build configs
       - '/include'
     sources:
       - type: git
         url: https://github.com/organicmaps/organicmaps
-        tag: 2022.05.31-10-android
-        commit: 70fccbdfee4b8d48e9f08d7f683d417166dd7902
+        tag: 2022.06.18-2-android
+        commit: b852ac84f929d3d31f8617d84879d342aefd0b71
       - type: patch
-        path: ./changelog-2022.05.31-10.patch
+        path: ./changelog-2022.06.18-2.patch
       - type: shell
         commands:
           - 'bash configure.sh'
-      # Tell the program that the read-only and the read-write data locations
-      # are different, and create the read-write one.
-      - type: script
-        commands:
-          - 'data_path="${XDG_DATA_HOME:-${HOME}/.var/app/app.organicmaps.OrganicMaps/data}/OMaps"'
-          - 'mkdir -p "$data_path"'
-          - 'exec -a "$0" /app/bin/.OMaps-wrapped -resources_path /app/share/organicmaps/data -data_path "$data_path" "$@"'
-        dest-filename: 'wrapper.sh'
