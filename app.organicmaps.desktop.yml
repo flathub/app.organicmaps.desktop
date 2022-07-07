@@ -11,21 +11,7 @@ finish-args:
   - --socket=fallback-x11
   - --socket=wayland
   - --device=dri
-cleanup:
-  # rsync was only needed for building
-  - '/bin/rsync'
-  - '/bin/rsync-ssl'
 modules:
-  - name: rsync # used at build time
-    buildsystem: autotools
-    config-opts:
-      - --disable-md2man
-      - --disable-xxhash
-    sources:
-      - type: git
-        url: https://github.com/WayneD/rsync
-        tag: v3.2.3
-        commit: e94bad1c156fc3910f24e2b3b71a81b0b0bdeb70
   - name: organicmaps
     buildsystem: cmake-ninja
     builddir: true
@@ -37,10 +23,10 @@ modules:
     sources:
       - type: git
         url: https://github.com/organicmaps/organicmaps
-        tag: 2022.06.18-2-android
-        commit: b852ac84f929d3d31f8617d84879d342aefd0b71
+        tag: 2022.07.01-6-android
+        commit: 5260d7d9d305ed53a62940189e065a50cf272443
       - type: patch
-        path: ./changelog-2022.06.18-2.patch
+        path: ./changelog-2022.07.01-6.patch
       - type: shell
         commands:
           - 'bash configure.sh'
