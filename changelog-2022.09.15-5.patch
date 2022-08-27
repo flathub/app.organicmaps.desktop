@@ -1,0 +1,20 @@
+diff --git a/qt/res/app.organicmaps.desktop.metainfo.xml b/qt/res/app.organicmaps.desktop.metainfo.xml
+index b19f57fc5d..9541bd5a5f 100644
+--- a/qt/res/app.organicmaps.desktop.metainfo.xml
++++ b/qt/res/app.organicmaps.desktop.metainfo.xml
+@@ -107,6 +107,15 @@
+   </screenshots>
+ 
+   <releases>
++   <release version="2022.09.15-5" date="2022-09-15">
++     <description>
++       <ul>
++         <li></li>
++         <li></li>
++         <li></li>
++       </ul>
++     </description>
++   </release>
+    <release version="2022.08.23-5" date="2022-08-23">
+      <description>
+        <ul>
