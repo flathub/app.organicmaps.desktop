@@ -17,57 +17,16 @@ modules:
     builddir: true
     config-opts:
       - -DCMAKE_BUILD_TYPE=Release
-#   build-options:
-#     env:
-#       - GIT_LFS_SKIP_SMUDGE=1      
     cleanup:
       - '/lib' # static libraries and build configs
       - '/include'
     sources:
       - type: git
-        url: https://github.com/boostorg/boost
-#       tag: boost-1.80.0
-#       commit: 32da69a36f84c5255af8a994951918c258bac601
-        commit: ecdd60e74c0d43b9710d05f56967b1a01d7c9518
-        dest: ./3party/boost
-      - type: git
-        url: https://github.com/libexpat/libexpat 
-        commit: 1bb22cd03ab1ad48efb2bdee08cb805b5b593ea5
-        dest: ./3party/expat
-      - type: git
-        url: https://github.com/lemire/fast_double_parser 
-        commit: 111ad8041765d1623195bd6eb8b6bc7d97c44507
-        dest: ./3party/fast_double_parser
-      - type: git
-        url: https://github.com/google/googletest
-        commit: e2f3978937c0244508135f126e2617a7734a68be
-        dest: ./3party/googletest
-      - type: git
-        url: https://github.com/g-truc/glm
-        commit: c834d06c2739f63e28e5665d4569dca9415e3891
-        dest: ./3party/glm
-          
-      - type: git
-        url: https://github.com/organicmaps/just_gtfs
-        commit: 7516753825500f90ac2de6f18c256d5abec1ff33
-        dest: ./3party/just_gtfs
-      - type: git
-        url: https://github.com/organicmaps/protobuf
-        commit: a6189acd18b00611c1dc7042299ad75486f08a1a
-        dest: ./3party/protobuf/protobuf
-      - type: git
-        url: https://github.com/organicmaps/pugixml
-        commit: effc46f0ed35a70a53db7f56e37141ae3cb3a92a
-        dest: ./3party/pugixml/pugixml
-      - type: git
         url: https://github.com/organicmaps/organicmaps
         tag: 2022.09.15-5-android
         commit: 5f23e043cced6f432341d26f42d6c195b8517a12
-        disable-submodules: true
       - type: patch
         path: ./changelog-2022.09.15-5.patch
       - type: shell
         commands:
-          - 'echo "finding icudata"'
-          - 'find -name icudata.jar'
           - 'bash configure.sh'
