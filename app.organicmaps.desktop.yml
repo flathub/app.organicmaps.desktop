@@ -23,10 +23,10 @@ modules:
     sources:
       - type: git
         url: https://github.com/organicmaps/organicmaps
-        tag: 2022.12.18-12-android
-        commit: fea9b81f1a7fa302db3588153248523592048e48
+        tag: 2023.01.25-3-android
+        commit: 3cbae4aa5cc5fd4f1d0ceb839a4dcc5f99371af9
       - type: patch
-        path: ./changelog-2022.12.18-12.patch
+        path: ./changelog-2023.01.25-3.patch
       - type: shell
         commands:
           - 'bash configure.sh'
