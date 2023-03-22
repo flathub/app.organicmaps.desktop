@@ -2,7 +2,7 @@ app-id: app.organicmaps.desktop
 runtime: org.kde.Platform
 runtime-version: '5.15-22.08'
 sdk: org.kde.Sdk
-command: OMaps
+command: 'Organic Maps'
 rename-desktop-file: OrganicMaps.desktop
 rename-icon: organicmaps
 finish-args:
