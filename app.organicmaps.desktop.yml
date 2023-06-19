@@ -1,6 +1,6 @@
 app-id: app.organicmaps.desktop
 runtime: org.kde.Platform
-runtime-version: '5.15-22.08'
+runtime-version: '6.5'
 sdk: org.kde.Sdk
 command: OMaps
 rename-desktop-file: OrganicMaps.desktop
@@ -23,8 +23,7 @@ modules:
     sources:
       - type: git
         url: https://github.com/organicmaps/organicmaps
-        tag: 2023.06.04-13-android
-        commit: acc7c0547db4285dd8841ae7f98811268e38d908
+        branch: master
       - type: patch
         path: ./changelog-2023.06.04-13.patch
       - type: shell
