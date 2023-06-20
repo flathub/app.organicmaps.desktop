@@ -1,0 +1,19 @@
+diff --git a/packaging/app.organicmaps.desktop.metainfo.xml b/packaging/app.organicmaps.desktop.metainfo.xml
+index ad5bf20071..b33562f469 100644
+--- a/packaging/app.organicmaps.desktop.metainfo.xml
++++ b/packaging/app.organicmaps.desktop.metainfo.xml
+@@ -113,6 +113,14 @@
+   </screenshots>
+ 
+   <releases>
++   <release version="2023.06.20-1 beta" date="2023-06-20">
++     <description>
++       <p>Highlights:</p>
++         <ul>
++           <li>Ported to Qt6</li>
++         </ul>       
++     </description>
++   </release>
+    <release version="2023.06.04-13" date="2023-06-04">
+      <description>
+        <p>Highlights:</p>
