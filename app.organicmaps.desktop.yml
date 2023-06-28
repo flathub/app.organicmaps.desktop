@@ -24,7 +24,7 @@ modules:
       - type: git
         url: https://github.com/organicmaps/organicmaps
         branch: master
-        commit: be5a0aa2991377eedd61f19ec3853332b51b114b
+        commit: ca31bbaee4cd7ffcb6e8483587d244695777daf9
       - type: patch
         path: ./changelog-2023.06.20beta-1.patch
       - type: shell
