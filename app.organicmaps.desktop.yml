@@ -16,7 +16,7 @@ modules:
     buildsystem: cmake-ninja
     builddir: true
     config-opts:
-      - -DCMAKE_BUILD_TYPE=RelWithDebInfo
+      - -DCMAKE_BUILD_TYPE=Release
     cleanup:
       - '/lib' # static libraries and build configs
       - '/include'
