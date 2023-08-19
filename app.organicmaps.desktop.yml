@@ -27,6 +27,8 @@ modules:
         commit: aa23f8e258dfb03ab3801ed563249fb5a7ca596b
       - type: patch
         path: ./changelog-2023.08.18-8.patch
+      - type: patch
+        path: ./disable-world-feed-integration-test.patch
       - type: shell
         commands:
           - 'bash configure.sh'
