@@ -11,6 +11,7 @@ finish-args:
   - --socket=fallback-x11
   - --socket=wayland
   - --device=dri
+  - --system-talk-name=org.freedesktop.GeoClue2.*
 modules:
   - name: organicmaps
     buildsystem: cmake-ninja
@@ -23,9 +24,9 @@ modules:
     sources:
       - type: git
         url: https://github.com/organicmaps/organicmaps
-        commit: 720ca49589f6a6b40d408e649d1b236fe9898f85
+        commit: 3943d0f5a295d86b2ea04a90ab1fb6fe8425ab2c
       - type: patch
-        path: ./changelog-2023.07.09beta-1.patch
+        path: ./disable-world-feed-integration-test.patch
       - type: shell
         commands:
           - 'bash configure.sh'
