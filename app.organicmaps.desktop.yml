@@ -24,7 +24,7 @@ modules:
     sources:
       - type: git
         url: https://github.com/organicmaps/organicmaps
-        commit: 3943d0f5a295d86b2ea04a90ab1fb6fe8425ab2c
+        commit: ea37cc36565a30695e7a045e83abfb1886b8b538
       - type: patch
         path: ./disable-world-feed-integration-test.patch
       - type: shell
