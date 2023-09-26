@@ -30,6 +30,8 @@ modules:
         path: ./changelog-2023.09.22-27.patch
       - type: patch
         path: ./disable-world-feed-integration-test.patch
+      - type: patch
+        path: ./appid.patch
       - type: shell
         commands:
           - 'bash configure.sh'

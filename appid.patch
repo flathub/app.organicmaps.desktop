@@ -1,0 +1,13 @@
+diff --git a/platform/qt_location_service.cpp b/platform/qt_location_service.cpp
+index ada307344d..b81b1376b2 100644
+--- a/platform/qt_location_service.cpp
++++ b/platform/qt_location_service.cpp
+@@ -61,7 +61,7 @@ static location::TLocationSource qStringToTLocationSource(QString const & source
+ QtLocationService::QtLocationService(location::LocationObserver & observer, std::string const & sourceName) : LocationService(observer)
+ {
+   QVariantMap params;
+-  params["desktopId"] = "OrganicMaps";
++  params["desktopId"] = "app.organicmaps.desktop";
+   m_positionSource = QGeoPositionInfoSource::createSource(QString::fromStdString(sourceName), params, this);
+ 
+   if (!m_positionSource)
