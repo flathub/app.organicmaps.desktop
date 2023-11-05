@@ -1,0 +1,12 @@
+diff --git a/qt/main.cpp b/qt/main.cpp
+index 17766fc4d3..c684b19f4d 100644
+--- a/qt/main.cpp
++++ b/qt/main.cpp
+@@ -139,6 +139,7 @@ int main(int argc, char * argv[])
+   UNUSED_VALUE(mainGuard);
+ 
+   QApplication app(argc, argv);
++  app.setDesktopFileName("app.organicmaps.desktop");
+   platform.SetupMeasurementSystem();
+ 
+ 
