@@ -24,10 +24,10 @@ modules:
     sources:
       - type: git
         url: https://github.com/organicmaps/organicmaps
-        tag: 2024.02.06-11-android
-        commit: b158a546a53f5c19dc17e836763332e34356dc61
+        tag: 2024.03.05-4-android
+        commit: 5a16f7adfe3551622010f4325cd3e3df715d1225
       - type: patch
-        path: ./changelog-2024.02.06-11.patch
+        path: ./changelog-2024.03.05-4.patch
       - type: patch
         path: ./flathub-linter-fixes.patch
       - type: patch
