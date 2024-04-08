@@ -24,12 +24,10 @@ modules:
     sources:
       - type: git
         url: https://github.com/organicmaps/organicmaps
-        tag: 2024.03.05-4-android
-        commit: 5a16f7adfe3551622010f4325cd3e3df715d1225
+        tag: 2024.03.31-8-android
+        commit: 20e3941241658cd9f480f59255898a1ac5ac9b0d
       - type: patch
-        path: ./changelog-2024.03.05-4.patch
-      - type: patch
-        path: ./flathub-linter-fixes.patch
+        path: ./changelog-2024.03.31-8.patch
       - type: patch
         path: ./disable-world-feed-integration-test.patch
       - type: shell
