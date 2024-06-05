@@ -24,10 +24,10 @@ modules:
     sources:
       - type: git
         url: https://github.com/organicmaps/organicmaps
-        tag: 2024.05.11-3-android
-        commit: d8a071a02319e1d724ae6677c148c57fdb159337
+        tag: 2024.06.02-12-android
+        commit: 0e60a7cf9042a36f1c1735c7ca7333a02199cc0d
       - type: patch
-        path: ./changelog-2024.05.11-3.patch
+        path: ./changelog-2024.06.02-12.patch
       - type: patch
         path: ./disable-world-feed-integration-test.patch
       - type: shell
