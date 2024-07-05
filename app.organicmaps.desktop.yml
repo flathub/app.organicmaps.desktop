@@ -3,8 +3,6 @@ runtime: org.kde.Platform
 runtime-version: '6.6'
 sdk: org.kde.Sdk
 command: OMaps
-rename-desktop-file: OrganicMaps.desktop
-rename-icon: organicmaps
 finish-args:
   - --share=network
   - --share=ipc
