@@ -1,11 +1,43 @@
 diff --git a/packaging/app.organicmaps.desktop.metainfo.xml b/packaging/app.organicmaps.desktop.metainfo.xml
-index b7d2f18040..3b167738fb 100644
+index b7d2f18040..614367076a 100644
 --- a/packaging/app.organicmaps.desktop.metainfo.xml
 +++ b/packaging/app.organicmaps.desktop.metainfo.xml
-@@ -111,6 +111,33 @@
+@@ -94,23 +94,64 @@
+   <url type="vcs-browser">https://github.com/organicmaps/organicmaps/</url>
+   <url type="contribute">https://github.com/organicmaps/organicmaps/blob/master/docs/CONTRIBUTING.md</url>
+ 
+-  <launchable type="desktop-id">OrganicMaps.desktop</launchable>
++  <launchable type="desktop-id">app.organicmaps.desktop.desktop</launchable>
+   <screenshots>
+     <screenshot type="default">
+       <image>https://organicmaps.app/images/screenshots/Desktop_light_routing.png</image>
++      <caption>Routing in dark mode</caption>
+     </screenshot>
+     <screenshot>
+       <image>https://organicmaps.app/images/screenshots/Desktop_dark_routing.png</image>
++      <caption>Routing in light mode</caption>
+     </screenshot>
+     <screenshot>
+       <image>https://organicmaps.app/images/screenshots/Desktop_light_overview.png</image>
++      <caption>Map overview in light mode</caption>
+     </screenshot>
+     <screenshot>
+       <image>https://organicmaps.app/images/screenshots/Desktop_dark_overview.png</image>
++      <caption>Map overview in dark mode</caption>
+     </screenshot>
    </screenshots>
  
    <releases>
++   <release version="2024.07.27-8" date="2024-07-27">
++     <description>
++       <p>Highlights:</p>
++         <ul>
++           <li>OpenStreetMap data as of July 23</li>
++           <li>Fixed multiline RTL texts</li>
++           <li>Fixed indentation for Chinese, Japanese and Korean characters when Noto font is used</li>
++         </ul>
++     </description>
++   </release>
 +   <release version="2024.07.08-3" date="2024-07-08">
 +     <description>
 +       <p>Highlights:</p>
