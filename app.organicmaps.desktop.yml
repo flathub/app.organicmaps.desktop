@@ -30,6 +30,8 @@ modules:
         path: ./changelog-2024.08.16-5.patch
       - type: patch
         path: ./disable-world-feed-integration-test.patch
+      - type: patch
+        path: ./geoclue-permission-fix.patch
       - type: shell
         commands:
           - 'bash configure.sh'
