@@ -30,6 +30,8 @@ modules:
         path: ./changelog-2024.10.04-7.patch
       - type: patch
         path: ./disable-world-feed-integration-test.patch
+      - type: patch
+        path: ./init-clientIsActive.patch
       - type: shell
         commands:
           - 'bash configure.sh'
