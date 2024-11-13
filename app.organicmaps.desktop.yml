@@ -10,12 +10,18 @@ finish-args:
   - --socket=wayland
   - --device=dri
   - --system-talk-name=org.freedesktop.GeoClue2.*
+build-options:
+   cflags: -Og -ggdb3 -fno-inline
+   cxxflags: -Og -ggdb3 -fno-inline
+   strip: false
+   no-debuginfo-compression: true
+   no-debuginfo: true
 modules:
   - name: organicmaps
     buildsystem: cmake-ninja
     builddir: true
     config-opts:
-      - -DCMAKE_BUILD_TYPE=Release
+      - -DCMAKE_BUILD_TYPE=Debug
     cleanup:
       - '/lib' # static libraries and build configs
       - '/include'
