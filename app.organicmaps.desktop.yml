@@ -1,10 +1,8 @@
 app-id: app.organicmaps.desktop
 runtime: org.kde.Platform
-runtime-version: '6.5'
+runtime-version: '6.6'
 sdk: org.kde.Sdk
 command: OMaps
-rename-desktop-file: OrganicMaps.desktop
-rename-icon: organicmaps
 finish-args:
   - --share=network
   - --share=ipc
@@ -24,9 +22,18 @@ modules:
     sources:
       - type: git
         url: https://github.com/organicmaps/organicmaps
-        commit: ea37cc36565a30695e7a045e83abfb1886b8b538
+        tag: 2024.11.12-7-android
+        commit: c62a617d960ae3093226995a5ff9e65dc3c69020
+      - type: patch
+        path: ./desktopfile-icon.patch
+      - type: patch
+        path: ./changelog-2024.11.12-7.patch
       - type: patch
         path: ./disable-world-feed-integration-test.patch
       - type: shell
         commands:
           - 'bash configure.sh'
+          - for s in {32,64,128,256,512}; do ffmpeg -i qt/res/logo.png
+            -s "${s}x${s}" -update true "qt/res/logo_${s}x${s}.png";
+            install -Dm644 "qt/res/logo_${s}x${s}.png" "${FLATPAK_DEST}/share/icons/hicolor/${s}x${s}/apps/${FLATPAK_ID}.png";
+            done;
