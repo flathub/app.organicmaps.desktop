@@ -1,6 +1,6 @@
 app-id: app.organicmaps.desktop
 runtime: org.kde.Platform
-runtime-version: '6.6'
+runtime-version: '6.8'
 sdk: org.kde.Sdk
 command: OMaps
 finish-args:
@@ -30,6 +30,8 @@ modules:
         path: ./changelog-2024.11.27-12.patch
       - type: patch
         path: ./disable-world-feed-integration-test.patch
+      - type: patch
+        path: ./qt67-fix.patch
       - type: shell
         commands:
           - 'bash configure.sh'
