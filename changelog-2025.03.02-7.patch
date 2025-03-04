@@ -1,0 +1,20 @@
+diff --git a/packaging/app.organicmaps.desktop.metainfo.xml b/packaging/app.organicmaps.desktop.metainfo.xml
+index 30551a0d62..989df8d0ed 100644
+--- a/packaging/app.organicmaps.desktop.metainfo.xml
++++ b/packaging/app.organicmaps.desktop.metainfo.xml
+@@ -115,6 +115,15 @@
+   </screenshots>
+ 
+   <releases>
++   <release version="2025.03.02-7" date="2025-03-02">
++     <description>
++       <p>Highlights:</p>
++         <ul>
++           <li>OpenStreetMap data as of February 27</li>
++           <li>Improved routing for bicycles</li>
++        </ul>
++     </description>
++   </release>
+    <release version="2025.02.17-3" date="2025-02-17">
+      <description>
+        <p>Highlights:</p>
