@@ -1,11 +1,19 @@
 diff --git a/packaging/app.organicmaps.desktop.metainfo.xml b/packaging/app.organicmaps.desktop.metainfo.xml
-index 989df8d0ed..2da8506935 100644
+index 989df8d0ed..ff08ba2564 100644
 --- a/packaging/app.organicmaps.desktop.metainfo.xml
 +++ b/packaging/app.organicmaps.desktop.metainfo.xml
-@@ -115,6 +115,14 @@
+@@ -115,6 +115,22 @@
    </screenshots>
  
    <releases>
++   <release version="2025.05.18-2" date="2025-05-18">
++     <description>
++       <p>Highlights:</p>
++         <ul>
++           <li>OpenStreetMap data as of May 11</li>
++        </ul>
++     </description>
++   </release>
 +   <release version="2025.04.21-4" date="2025-04-21">
 +     <description>
 +       <p>Highlights:</p>
