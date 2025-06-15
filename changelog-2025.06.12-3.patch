@@ -1,11 +1,26 @@
 diff --git a/packaging/app.organicmaps.desktop.metainfo.xml b/packaging/app.organicmaps.desktop.metainfo.xml
-index 989df8d0ed..ff08ba2564 100644
+index 989df8d0ed..f8bf21fe29 100644
 --- a/packaging/app.organicmaps.desktop.metainfo.xml
 +++ b/packaging/app.organicmaps.desktop.metainfo.xml
-@@ -115,6 +115,22 @@
+@@ -115,6 +115,37 @@
    </screenshots>
  
    <releases>
++   <release version="2025.06.12-3" date="2025-06-12">
++     <description>
++       <p>Highlights:</p>
++         <ul>
++           <li>OpenStreetMap data as of June 8</li>
++           <li>Less annoying icons for car charging stations</li>
++           <li>Display plant nurseries, crash/traffic barriers, radio/tv/music studios, firepits, ladders, cranes, and love hotels</li>
++           <li>Qingdao metro icons</li>
++           <li>Updated sewing/tailor search synonyms</li>
++           <li>Fixed category search for Lithuanian and other languages</li>
++           <li>Added missing outdoors style to the bundle</li>
++           <li>Fix "About" dialog window flags and content</li>
++        </ul>
++     </description>
++   </release>
 +   <release version="2025.05.18-2" date="2025-05-18">
 +     <description>
 +       <p>Highlights:</p>
