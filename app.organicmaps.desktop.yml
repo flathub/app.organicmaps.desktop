@@ -28,12 +28,12 @@ modules:
     sources:
       - type: git
         url: https://github.com/organicmaps/organicmaps
-        tag: 2025.07.13-9-android
-        commit: deceee44454d99164ac188c0717fdada99251a9d
+        branch: 2025.08.10-20-android
+        commit: 0bde129c971f56cc71028cb9b2f4b2c045f65e13
       - type: patch
         path: ./desktopfile-icon.patch
       - type: patch
-        path: ./changelog-2025.07.13-9.patch
+        path: ./changelog-2025.08.10-20.patch
       - type: patch
         path: ./disable-world-feed-integration-test.patch
       - type: shell
