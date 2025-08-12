@@ -1,7 +1,7 @@
-diff --git a/qt/res/app.organicmaps.desktop.desktop b/qt/res/app.organicmaps.desktop.desktop
+diff --git a/qt/res/linux/app.organicmaps.desktop.desktop b/qt/res/linux/app.organicmaps.desktop.desktop
 index 017795f238..1ce1b135f9 100644
---- a/qt/res/app.organicmaps.desktop.desktop
-+++ b/qt/res/app.organicmaps.desktop.desktop
+--- a/qt/res/linux/app.organicmaps.desktop.desktop
++++ b/qt/res/linux/app.organicmaps.desktop.desktop
 @@ -7,7 +7,7 @@ Comment[ast]=Mapes detallaos del mundu ensin conexón
  Comment[ca]=Mapes detallats del món sense connexió
  Comment[es]=Mapas detallados del mundo sin conexión
