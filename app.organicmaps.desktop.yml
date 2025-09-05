@@ -31,6 +31,8 @@ modules:
         branch: 2025.09.01-6-android
         commit: a8811b924ac936b719d5cb1f1a941dd4f1e4a583
       - type: patch
+        path: ./fix-freezup.patch
+      - type: patch
         path: ./desktopfile-icon.patch
       - type: patch
         path: ./changelog-2025.09.01-6.patch
