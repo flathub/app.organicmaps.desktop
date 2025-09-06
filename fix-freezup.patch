@@ -1,0 +1,21 @@
+commit caf8e007994da75417e2a1abe4859dcfac4a6fab
+Author: Alexander Borsuk <me@alex.bio>
+Date:   Fri Sep 5 12:25:00 2025 +0200
+
+    [linux] Fix hanging curl
+    
+    Signed-off-by: Alexander Borsuk <me@alex.bio>
+
+diff --git a/private.h b/private.h
+index d5c7fba067..438111bf49 100644
+--- a/private.h
++++ b/private.h
+@@ -10,7 +10,7 @@
+ #define METASERVER_URL "https://meta.omaps.app/maps"
+ #define DIFF_LIST_URL ""
+ #define DEFAULT_URLS_JSON "[ \"https://cdn-de1.organicmaps.app/\",\"https://cdn-us3.organicmaps.app/\",\"https://cdn-nl1.organicmaps.app/\",\"https://cdn-uk1.organicmaps.app/\",\"https://cdn-fi1.organicmaps.app/\",\"https://cdn.organicmaps.app/\" ]"
+-#define DEFAULT_CONNECTION_CHECK_IP "65.108.198.117"  // For now the IP of cdn.organicmaps.app
++#define DEFAULT_CONNECTION_CHECK_IP "162.55.100.169"  // For now the IP of cdn.organicmaps.app
+ #define TRAFFIC_DATA_BASE_URL ""
+ #define USER_BINDING_PKCS12 ""
+ #define USER_BINDING_PKCS12_PASSWORD ""
