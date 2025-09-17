@@ -22,14 +22,14 @@ modules:
     sources:
       - type: git
         url: https://github.com/organicmaps/organicmaps
-        branch: 2025.09.01-6-android
-        commit: a8811b924ac936b719d5cb1f1a941dd4f1e4a583
+        branch: 2025.09.15-18-android
+        commit: 2234453ae3e3d20c7b8ee6f6488c39469b05c1c5
       - type: patch
         path: ./fix-freezup.patch
       - type: patch
         path: ./desktopfile-icon.patch
       - type: patch
-        path: ./changelog-2025.09.01-6.patch
+        path: ./changelog-2025.09.15-18.patch
       - type: patch
         path: ./disable-world-feed-integration-test.patch
       - type: shell
