@@ -1,0 +1,30 @@
+diff --git a/packaging/app.organicmaps.desktop.metainfo.xml b/packaging/app.organicmaps.desktop.metainfo.xml
+index 57e7a3d390..e1b5a92232 100644
+--- a/packaging/app.organicmaps.desktop.metainfo.xml
++++ b/packaging/app.organicmaps.desktop.metainfo.xml
+@@ -115,6 +115,25 @@
+   </screenshots>
+ 
+   <releases>
++   <release version="2025.09.25-5" date="2025-09-25">
++     <description>
++       <p>Highlights:</p>
++         <ul>
++           <li>New OpenStreetMap data as of September 13</li>
++           <li>New servers</li>
++        </ul>
++       <p>Map Styles:</p>
++         <ul>
++           <li>Show ruins and archeological sites from zoom 16</li>
++           <li>New icons for outdoors style mast, comm and power towers</li>
++           <li>Increased peak icon size in outdoors style</li>
++         </ul>
++        <p>Linux:</p>
++         <ul>
++           <li>Cancellable map downloads</li>
++         </ul>
++     </description>
++   </release>
+    <release version="2025.09.15-18" date="2025-09-15">
+      <description>
+        <p>Highlights:</p>
