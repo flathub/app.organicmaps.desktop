@@ -1,0 +1,48 @@
+diff --git a/packaging/app.organicmaps.desktop.metainfo.xml b/packaging/app.organicmaps.desktop.metainfo.xml
+index 57e7a3d390..beab8d9047 100644
+--- a/packaging/app.organicmaps.desktop.metainfo.xml
++++ b/packaging/app.organicmaps.desktop.metainfo.xml
+@@ -115,6 +115,43 @@
+   </screenshots>
+ 
+   <releases>
++   <release version="2025.10.05-7" date="2025-10-05">
++     <description>
++       <p>Highlights:</p>
++         <ul>
++           <li>New OpenStreetMap data as of October 4</li>
++           <li>Wikipedia data as of October 1</li>
++        </ul>
++       <p>Map Styles:</p>
++         <ul>
++           <li>Show bicycle rental shops tagged as amenity=bicycle + rental=shop</li>
++           <li>Show historic archaeological sites from zoom 12 and other historic sites from zoom 15 in Outdoor style</li>
++           <li>New icons for mast, communication, and power towers in Outdoors style</li>
++           <li>Increase peak icon size in Outdoors style</li>
++           <li>Add missing POI icon variants</li>
++           <li>Added more barrier types</li>
++         </ul>
++     </description>
++   </release>
++   <release version="2025.09.25-5" date="2025-09-25">
++     <description>
++       <p>Highlights:</p>
++         <ul>
++           <li>New OpenStreetMap data as of September 13</li>
++           <li>New servers</li>
++        </ul>
++       <p>Map Styles:</p>
++         <ul>
++           <li>Show ruins and archeological sites from zoom 16</li>
++           <li>New icons for outdoors style mast, comm and power towers</li>
++           <li>Increased peak icon size in outdoors style</li>
++         </ul>
++        <p>Linux:</p>
++         <ul>
++           <li>Cancellable map downloads</li>
++         </ul>
++     </description>
++   </release>
+    <release version="2025.09.15-18" date="2025-09-15">
+      <description>
+        <p>Highlights:</p>
