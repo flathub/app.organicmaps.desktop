@@ -1,11 +1,30 @@
 diff --git a/packaging/app.organicmaps.desktop.metainfo.xml b/packaging/app.organicmaps.desktop.metainfo.xml
-index 57e7a3d390..beab8d9047 100644
+index 57e7a3d390..94fff3247d 100644
 --- a/packaging/app.organicmaps.desktop.metainfo.xml
 +++ b/packaging/app.organicmaps.desktop.metainfo.xml
-@@ -115,6 +115,43 @@
+@@ -115,6 +115,62 @@
    </screenshots>
  
    <releases>
++   <release version="2025.10.23-22" date="2025-10-23">
++     <description>
++       <p>Highlights:</p>
++         <ul>
++           <li>POI details now show "name | ref" format (Viktor Govako)</li>
++           <li>Dark mode automatically syncs with system settings (DeepChirp)</li>
++           <li>Fresh OpenStreetMap data from October 21, 2025 (Viktor Govako)</li>
++           <li>New map objects: monitoring stations, traffic islands, Kneipp water cure facilities, miniature railways (Viktor Govako)</li>
++           <li>New POI types and icons: camp pitches in outdoors style, airport terminals, indoor play areas, telecommunication shops, boat rental facilities, slipway facilities, updated waste disposal and landfill icons (David Martinez)</li>
++           <li>Show names of subway entrances/exits on the map (Viktor Govako)</li>
++           <li>Improved information displayed after selecting a river or waterway segment (Viktor Govako)</li>
++           <li>Better EV charging station search with improved synonyms in all languages (Alexander Borsuk)</li>
++           <li>Fixed emoji search with variant selectors (Alexander Borsuk)</li>
++           <li>No more numeric prefix suggestions after finding exact address match (Viktor Govako)</li>
++           <li>Importing/exporting GeoJSON from/to https://umap.openstreetmap.fr/ should now preserve all metadata (Shubh Kesharwani)</li>
++           <li>Additional colors are supported for waymarked trails for the Hiking Routes map layer (Viktor Govako)</li>
++        </ul>
++     </description>
++   </release>
 +   <release version="2025.10.05-7" date="2025-10-05">
 +     <description>
 +       <p>Highlights:</p>
