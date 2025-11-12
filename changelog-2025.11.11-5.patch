@@ -1,12 +1,22 @@
 diff --git a/packaging/app.organicmaps.desktop.metainfo.xml b/packaging/app.organicmaps.desktop.metainfo.xml
-index 57e7a3d390..94fff3247d 100644
+index 57e7a3d390..2431cd127a 100644
 --- a/packaging/app.organicmaps.desktop.metainfo.xml
 +++ b/packaging/app.organicmaps.desktop.metainfo.xml
-@@ -115,6 +115,62 @@
+@@ -115,6 +115,72 @@
    </screenshots>
  
    <releases>
-+   <release version="2025.10.23-22" date="2025-10-23">
++   <release version="2025.11.11-4" date="2025-09-25">
++     <description>
++       <p>Highlights:</p>
++         <ul>
++           <li>Highlight downloaded regions, nature reserves, national parks, protected areas, Aboriginal lands, danger areas, lakes on the World map</li>
++           <li>Fresh OSM maps as of November 9</li>
++           <li>Routing supports road closure times</li> 
++        </ul>
++     </description>
++    </release>
++    <release version="2025.10.23-22" date="2025-10-23">
 +     <description>
 +       <p>Highlights:</p>
 +         <ul>
