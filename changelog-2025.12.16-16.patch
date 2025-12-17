@@ -1,11 +1,22 @@
 diff --git a/packaging/app.organicmaps.desktop.metainfo.xml b/packaging/app.organicmaps.desktop.metainfo.xml
-index 57e7a3d390..b8377cfb98 100644
+index 57e7a3d390..716e803987 100644
 --- a/packaging/app.organicmaps.desktop.metainfo.xml
 +++ b/packaging/app.organicmaps.desktop.metainfo.xml
-@@ -115,6 +115,83 @@
+@@ -115,6 +115,94 @@
    </screenshots>
  
    <releases>
++   <release version="2025.12.16-16" date="2025-12-16">
++     <description>
++       <p>Highlights:</p>
++         <ul>
++           <li>NEW: Search for Christmas tree and Christmas market on the map</li>
++           <li>OpenStreetMap data as of December 14, 2025</li>
++           <li>National park borders and labels are less prominent on the world map</li>
++           <li>Display parking capacity in search results</li>
++        </ul>
++     </description>
++    </release>
 +   <release version="2025.11.26-5" date="2025-11-26">
 +     <description>
 +       <p>Highlights:</p>
