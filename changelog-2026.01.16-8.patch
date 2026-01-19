@@ -1,11 +1,26 @@
 diff --git a/packaging/app.organicmaps.desktop.metainfo.xml b/packaging/app.organicmaps.desktop.metainfo.xml
-index 57e7a3d390..716e803987 100644
+index 57e7a3d390..452f292b96 100644
 --- a/packaging/app.organicmaps.desktop.metainfo.xml
 +++ b/packaging/app.organicmaps.desktop.metainfo.xml
-@@ -115,6 +115,94 @@
+@@ -115,6 +115,109 @@
    </screenshots>
  
    <releases>
++   <release version="2026.01.16-8" date="2026-01-16">
++     <description>
++       <p>Highlights:</p>
++         <ul>
++           <li>Higher-contrast dark theme colors</li>
++           <li>Export Bookmarks or Tracks as GeoJSON</li>
++           <li>Updated OpenStreetMap data (January 11)</li>
++           <li>Added Bulgarian search synonyms</li>
++           <li>Excluded casinos from the “Entertainment” category</li>
++           <li>Reduced the thickness of subway lines</li>
++           <li>Added capacity information to search results for motorcycle parking, bicycle rental, bicycle charging, and car charging</li>
++           <li>Show floor level in search results</li>
++        </ul>
++     </description>
++    </release>
 +   <release version="2025.12.16-16" date="2025-12-16">
 +     <description>
 +       <p>Highlights:</p>
