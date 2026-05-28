@@ -2,10 +2,12 @@ diff --git a/qt/res/linux/app.organicmaps.desktop.desktop b/qt/res/linux/app.org
 index 017795f238..1ce1b135f9 100644
 --- a/qt/res/linux/app.organicmaps.desktop.desktop
 +++ b/qt/res/linux/app.organicmaps.desktop.desktop
-@@ -7,7 +7,7 @@ Comment[ast]=Mapes detallaos del mundu ensin conexón
+@@ -7,9 +7,9 @@ Comment[ast]=Mapes detallaos del mundu ensin conexón
  Comment[ca]=Mapes detallats del món sense connexió
  Comment[es]=Mapas detallados del mundo sin conexión
  Comment[ru]=Подробная оффлайновая карта мира
+ Comment[zh_CN]=详细的离线世界地图
+ Comment[zh_TW]=詳細的離線世界地圖
 -Icon=organicmaps
 +Icon=app.organicmaps.desktop
  TryExec=OMaps
