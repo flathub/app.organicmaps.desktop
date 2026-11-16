@@ -31,3 +31,4 @@ modules:
         commit: 3425055d9bce1233ae63a06aff3ada8cec1b80a4
         # The application version counts commits by their UTC date.
         disable-shallow-clone: true
+        disable-lfs: true
